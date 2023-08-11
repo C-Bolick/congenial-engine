@@ -25,18 +25,32 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // get one product
 router.get('/:id', (req, res) => {
-  
+  Product.findAll({
+    include: [
+          {
+            model: Category
+          }, 
+          {
+            model: Tag, through:ProductTag
+          }
+        ],
+    where: { id: req.params.id }
+  })
+  .then((product) => {
+    res.status(200).json(product);
+  })
 });
 
 // create new product
 router.post('/', (req, res) => {
+    /* req.body should look like this...
     {
       product_name: "Basketball",
       price: 200.00,
       stock: 3,
       tagIds: [1, 2, 3, 4]
     }
-
+  */
   Product.create(req.body)
     .then((product) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
@@ -104,8 +118,15 @@ router.put('/:id', (req, res) => {
     });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   // delete one product by its `id` value
+  try {
+    await Product.destroy({where: {id: req.params.id}})
+    res.status(200).json("Success")
+  } catch (mrPoopyPants) {
+    res.status(400).json(mrPoopyPants);
+  }
+
 });
 
 module.exports = router;
