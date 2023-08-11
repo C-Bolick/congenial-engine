@@ -33,6 +33,6 @@ Credit: Catherine Bolick - https://github.com/C-Bolick
 
 N/A
 
-![Alt text](<Screenshot 2013-08-11 080100.png>)
+![Alt text](<Screenshot 2023-08-11 080100.png>)
 
 Link: https://app.screencastify.com/manage/videos/plFwbDFuEsMqdGYluZ4f
